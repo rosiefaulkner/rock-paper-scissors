@@ -57,15 +57,25 @@ var getRoundWinner = (roundNumber) => {
     let tie = 'Tie';
     let playerTwoWins= 'Player Two';
     let playerOneWins= 'Player One';
+
+    if (roundNumber !== 1 && roundNumber !== 2 && roundNumber !== 3){
+        return null;
+    } 
     
     if (roundNumber === 1){
+        if (playerOneMoveOneType == null || playerTwoMoveOneType == null){
+            return null;
+        }
+        if (playerOneMoveOneValue == null || playerTwoMoveOneValue == null){
+            return null;
+        }
         if (playerOneMoveOneType === playerTwoMoveOneType){
             if (playerOneMoveOneValue === playerTwoMoveOneValue) {
                 let winner = tie;
                 return winner;
             } else if (playerOneMoveOneValue < playerTwoMoveOneValue){
                 let winner = playerTwoWins;
-                return playerwinnerTwoWins;
+                return winner;
             } else if (playerOneMoveOneValue > playerTwoMoveOneValue){
                 let winner = playerOneWins;
                 return winner;
@@ -93,7 +103,14 @@ var getRoundWinner = (roundNumber) => {
 
     }
 
+
     if (roundNumber === 2){
+        if (playerOneMoveTwoType == null || playerTwoMoveTwoType == null){
+            return null;
+        }
+        if (playerOneMoveTwoValue == null || playerTwoMoveTwoValue == null){
+            return null;
+        }
         if (playerOneMoveTwoType === playerTwoMoveTwoType){
             if (playerOneMoveTwoValue === playerTwoMoveTwoValue) {
                 let winner = tie;
@@ -128,6 +145,12 @@ var getRoundWinner = (roundNumber) => {
     }
 
     if (roundNumber === 3){
+        if (playerOneMoveThreeType == null || playerTwoMoveThreeType == null){
+            return null;
+        }
+        if (playerOneMoveThreeValue == null || playerTwoMoveThreeValue == null){
+            return null;
+        }
         if (playerOneMoveThreeType === playerTwoMoveThreeType){
             if (playerOneMoveThreeValue === playerTwoMoveThreeValue) {
                 let winner = tie;
@@ -170,15 +193,19 @@ var getRoundWinner = (roundNumber) => {
         let tie = 0;
         let winner = '';
 
+    if (playerOneMoveOneType == null || playerOneMoveOneValue == null || playerOneMoveTwoType == null || playerOneMoveTwoValue == null || playerOneMoveThreeType == null || playerOneMoveThreeValue == null){
+        return null;
+    }
+
 // For loop
        let i = 1;
         
        for (i = 1; i < 4; i++){
            winner = getRoundWinner(i);
            
-           if(winner === 'Player 1'){
+           if(winner === 'Player One'){
                 playerOneWins++;
-            } else if (winner === 'Player 2'){
+            } else if (winner === 'Player Two'){
                 playerTwoWins++;
             } else {
                 tie++;
@@ -196,12 +223,12 @@ var getRoundWinner = (roundNumber) => {
 
 var setComputerMoves = (computerValue) => {
     
-    playerTwoMoveOneValue = 0;
-    playerTwoMoveTwoValue = 0;
-    playerTwoMoveThreeValue = 0;
+    playerTwoMoveOneValue = 1;
+    playerTwoMoveTwoValue = 1;
+    playerTwoMoveThreeValue = 1;
     
 
-    let computerValue = Math.floor(Math.random()*3);
+    computerValue = Math.floor(Math.random()*3);
     
     switch (computerValue){
         case 0:
@@ -213,8 +240,6 @@ var setComputerMoves = (computerValue) => {
         case 2:
             playerTwoMoveOneType = 'scissors';
             break;
-        default:
-            computerValue = "Error"
     }
 
     computerValue = Math.floor(Math.random()*3);
@@ -229,8 +254,6 @@ var setComputerMoves = (computerValue) => {
         case 2:
             playerTwoMoveTwoType = 'scissors';
             break;
-        default:
-            computerValue = "Error"
     }
 
     computerValue = Math.floor(Math.random()*3);
@@ -245,12 +268,10 @@ var setComputerMoves = (computerValue) => {
         case 2:
             playerTwoMoveThreeType = 'scissors';
             break;
-        default:
-            computerValue = "Error"
     }
 
 while (playerTwoMoveOneValue + playerTwoMoveTwoValue + playerTwoMoveThreeValue < 99){
-    computerValue = (Math.random()*3);
+    computerValue = (Math.random());
 
     if (computerValue <= .5){
         playerTwoMoveOneValue++;
